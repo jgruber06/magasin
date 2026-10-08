@@ -1,0 +1,27 @@
+<%- include('../header') %>
+<div class="ui main container">
+  <h2>Catégories</h2>
+  <% if (erreur) { %>
+    <div class="ui negative message">Suppression impossible : cette catégorie contient des produits.</div>
+  <% } %>
+  <a class="ui primary button" href="/categories/add">Ajouter une catégorie</a>
+  <table class="ui celled table">
+    <thead><tr><th>Nom</th><th></th></tr></thead>
+    <tbody>
+      <% if (!categories.length) { %><tr><td colspan="2">Aucune catégorie pour l'instant.</td></tr><% } %>
+      <% categories.forEach(function(c) { %>
+        <tr>
+          <td><%= c.Nom %></td>
+          <td>
+            <a class="ui button" href="/categories/edit/<%= c.Id %>">Modifier</a>
+            <form action="/categories/delete/<%= c.Id %>" method="post" style="display:inline"
+                  onsubmit="return confirm('Supprimer cette catégorie ?')">
+              <button class="ui red button" type="submit">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<%- include('../footer') %>

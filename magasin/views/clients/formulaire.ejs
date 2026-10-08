@@ -1,0 +1,33 @@
+<%- include('../header') %>
+<div class="ui main container">
+  <h2><%= leClient.Id ? 'Modifier le client' : 'Nouveau client' %></h2>
+  <% if (erreur) { %><div class="ui negative message"><%= erreur %></div><% } %>
+  <form class="ui form" method="post"
+        action="<%= leClient.Id ? '/clients/edit/' + leClient.Id : '/clients/add' %>">
+    <div class="two fields">
+      <div class="field">
+        <label>Nom</label>
+        <input type="text" name="Nom" value="<%= leClient.Nom || '' %>" required>
+      </div>
+      <div class="field">
+        <label>Prénom</label>
+        <input type="text" name="Prenom" value="<%= leClient.Prenom || '' %>" required>
+      </div>
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" name="Email" value="<%= leClient.Email || '' %>" required>
+    </div>
+    <div class="field">
+      <label>Adresse de livraison</label>
+      <input type="text" name="Adresse_livraison" value="<%= leClient.Adresse_livraison || '' %>" required>
+    </div>
+    <div class="field">
+      <label>Mot de passe <%= leClient.Id ? '(laisser vide pour ne pas le changer)' : '' %></label>
+      <input type="password" name="MDP" autocomplete="new-password" <%= leClient.Id ? '' : 'required' %>>
+    </div>
+    <button class="ui primary button" type="submit">Enregistrer</button>
+    <a class="ui button" href="/clients">Annuler</a>
+  </form>
+</div>
+<%- include('../footer') %>

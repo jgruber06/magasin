@@ -1,0 +1,31 @@
+<%- include('../header') %>
+<div class="ui main container">
+  <h2>Produits</h2>
+  <% if (erreur) { %>
+    <div class="ui negative message">Suppression impossible : ce produit figure dans une commande.</div>
+  <% } %>
+  <a class="ui primary button" href="/produits/add">Ajouter un produit</a>
+  <table class="ui celled table">
+    <thead><tr><th>Nom</th><th>Description</th><th>Prix</th><th>Stock</th><th>Catégorie</th><th></th></tr></thead>
+    <tbody>
+      <% if (!produits.length) { %><tr><td colspan="6">Aucun produit pour l'instant.</td></tr><% } %>
+      <% produits.forEach(function(p) { %>
+        <tr>
+          <td><%= p.Nom %></td>
+          <td><%= p.Description %></td>
+          <td><%= p.Prix.toFixed(2) %> €</td>
+          <td><%= p.Stock %></td>
+          <td><%= p.Categorie %></td>
+          <td>
+            <a class="ui button" href="/produits/edit/<%= p.Id %>">Modifier</a>
+            <form action="/produits/delete/<%= p.Id %>" method="post" style="display:inline"
+                  onsubmit="return confirm('Supprimer ce produit ?')">
+              <button class="ui red button" type="submit">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<%- include('../footer') %>

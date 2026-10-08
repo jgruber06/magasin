@@ -1,0 +1,37 @@
+<%- include('../header') %>
+<div class="ui main container">
+  <h2>Commandes</h2>
+  <a class="ui primary button" href="/commandes/add">Nouvelle commande</a>
+  <table class="ui celled table">
+    <thead><tr><th>N°</th><th>Date</th><th>Client</th><th>Produits</th><th>Total</th><th>Statut</th><th></th></tr></thead>
+    <tbody>
+      <% if (!commandes.length) { %><tr><td colspan="7">Aucune commande pour l'instant.</td></tr><% } %>
+      <% commandes.forEach(function(c) { %>
+        <tr>
+          <td><%= c.Id %></td>
+          <td><%= c.Date_commande %></td>
+          <td><%= c.Prenom %> <%= c.Nom %></td>
+          <td><%= c.Produits %></td>
+          <td><%= c.Montant_total.toFixed(2) %> €</td>
+          <td>
+            <form action="/commandes/statut/<%= c.Id %>" method="post" class="ui form">
+              <select name="Statut" onchange="this.form.submit()">
+                <% statuts.forEach(function(s) { %>
+                  <option <%= s === c.Statut ? 'selected' : '' %>><%= s %></option>
+                <% }) %>
+              </select>
+              <noscript><button class="ui button" type="submit">OK</button></noscript>
+            </form>
+          </td>
+          <td>
+            <form action="/commandes/delete/<%= c.Id %>" method="post"
+                  onsubmit="return confirm('Supprimer la commande ? Le stock sera remis.')">
+              <button class="ui red button" type="submit">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<%- include('../footer') %>

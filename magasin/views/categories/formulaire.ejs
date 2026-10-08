@@ -1,0 +1,14 @@
+<%- include('../header') %>
+<div class="ui main container">
+  <h2><%= categorie.Id ? 'Modifier la catégorie' : 'Nouvelle catégorie' %></h2>
+  <form class="ui form" method="post"
+        action="<%= categorie.Id ? '/categories/edit/' + categorie.Id : '/categories/add' %>">
+    <div class="field">
+      <label>Nom</label>
+      <input type="text" name="Nom" value="<%= categorie.Nom || '' %>" required>
+    </div>
+    <button class="ui primary button" type="submit">Enregistrer</button>
+    <a class="ui button" href="/categories">Annuler</a>
+  </form>
+</div>
+<%- include('../footer') %>

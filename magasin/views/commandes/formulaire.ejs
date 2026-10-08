@@ -1,0 +1,39 @@
+<%- include('../header') %>
+<div class="ui main container">
+  <h2>Nouvelle commande</h2>
+  <% if (erreur) { %><div class="ui negative message"><%= erreur %></div><% } %>
+  <form class="ui form" method="post" action="/commandes/add">
+    <div class="field">
+      <label>Client</label>
+      <select name="Id_client" required>
+        <option value="">Choisir un client</option>
+        <% clients.forEach(function(c) { %>
+          <option value="<%= c.Id %>"><%= c.Prenom %> <%= c.Nom %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <h4>Produits (laisse vide les lignes inutiles)</h4>
+    <% for (let i = 1; i <= 5; i++) { %>
+      <div class="fields">
+        <div class="twelve wide field">
+          <label>Produit <%= i %></label>
+          <select name="produit">
+            <option value="">(aucun)</option>
+            <% produits.forEach(function(p) { %>
+              <option value="<%= p.Id %>" <%= p.Stock ? '' : 'disabled' %>><%= p.Nom %> : <%= p.Prix.toFixed(2) %> € (stock <%= p.Stock %>)</option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="four wide field">
+          <label>Quantité</label>
+          <input type="number" name="quantite" min="1" value="1">
+        </div>
+      </div>
+    <% } %>
+
+    <button class="ui primary button" type="submit">Créer la commande</button>
+    <a class="ui button" href="/commandes">Annuler</a>
+  </form>
+</div>
+<%- include('../footer') %>
