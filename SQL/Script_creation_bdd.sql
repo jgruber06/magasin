@@ -1,3 +1,7 @@
+set foreign_key_checks = 0;
+drop table if exists contient, commande, produit, client, categorie;
+set foreign_key_checks = 1;
+
 use magasin;
 
 create table client(
@@ -7,7 +11,7 @@ create table client(
 	MDP_hash varchar(255) not null,
 	Email varchar(100) not null unique,
 	Adresse_livraison varchar(255) not null
-);
+)engine=InnoDB;
 
 create table commande(
 	Id int auto_increment primary key,
@@ -16,12 +20,12 @@ create table commande(
 	Montant_total decimal(10,2) not null default 0,
 	Id_client int not null,
 	foreign key (Id_client) references client(Id)
-);
+)engine=InnoDB;
 
 create table categorie(
 	Id int auto_increment primary key,
 	Nom varchar(100) not null
-);
+)engine=InnoDB;
 
 create table produit(
 	Id int auto_increment primary key,
@@ -31,7 +35,7 @@ create table produit(
 	Stock int unsigned not null default 0,
 	Id_categorie int not null,
 	foreign key (Id_categorie) references categorie(Id)
-);
+)engine=InnoDB;
 
 create table contient(
 	Id_commande int,
@@ -41,4 +45,4 @@ create table contient(
 	primary key (Id_commande, Id_produit),
 	foreign key (Id_commande) references commande(Id) on delete cascade,
 	foreign key (Id_produit) references produit(Id)
-);
+)engine=InnoDB;
